@@ -15,3 +15,19 @@ closeNavBtn.addEventListener("click", () => {
   openNavBtn.style.display = "inline-block";
   closeNavBtn.style.display = "none";
 });
+
+const sidebar = document.querySelector("aside");
+const showSidebarBtn = document.querySelector("#show__sidebar-btn");
+const hideSidebarBtn = document.querySelector("#hide__sidebar-btn");
+
+showSidebarBtn.addEventListener("click", () => {
+  sidebar.style.left = "0";
+  showSidebarBtn.style.display = "none";
+  hideSidebarBtn.style.display = "inline-block";
+});
+
+hideSidebarBtn.addEventListener("click", () => {
+  sidebar.style.left = "-100%";
+  showSidebarBtn.style.display = "inline-block";
+  hideSidebarBtn.style.display = "none";
+});
