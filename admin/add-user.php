@@ -29,6 +29,7 @@ include 'partials/header.php';
 </section>
 
 <!-- Footer -->
+
 <?php
-include 'partials/footer.php'
+include '../partials/footer.php';
 ?>

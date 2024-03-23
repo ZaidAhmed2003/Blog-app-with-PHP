@@ -24,12 +24,6 @@ include 'partials/header.php';
     </div>
 </section>
 
-
-
-
-
-
-
 <!-- Footer -->
 <?php
 include 'partials/footer.php'
