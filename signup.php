@@ -2,7 +2,6 @@
 require 'config/constants.php';
 
 // get back form data if there was an error
-
 $firstName = $_SESSION['signup-data']['firstname'] ?? null;
 $lastName = $_SESSION['signup-data']['lastname'] ?? null;
 $userName = $_SESSION['signup-data']['username'] ?? null;
