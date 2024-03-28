@@ -28,8 +28,10 @@ if (isset($_GET['id'])) {
     // Delete user from Database
     $deleteUserQuery = "DELETE FROM users WHERE id = '$id'";
     $deleteUserResult = mysqli_query($connection, $deleteUserQuery);
-    if (!mysqli_errno($connection)) {
-        $_SESSION['delete-user-success'] = "'{$user['firstname']}  '{$user['lastname']} ' deleted successfully";
+    if (mysqli_errno($connection)) {
+        $_SESSION['delete-user'] = "Couldn't delete '{$user['firstname']} '{$user['lastname']}'";
+    } else {
+        $_SESSION['delete-user-success'] = "'{$user['firstname']} '{$user['lastname']}' deleted successfully";
     }
 }
 
