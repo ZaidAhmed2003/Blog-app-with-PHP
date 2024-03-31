@@ -51,16 +51,6 @@ $posts = mysqli_query($connection, $query);
                 ?>
             </p>
         </div>
-    <?php elseif (isset($_SESSION['delete-post'])) : // Show if the post is deleted
-    ?>
-        <div class="container alert__message error">
-            <p>
-                <?=
-                $_SESSION['delete-post'];
-                unset($_SESSION['delete-post']);
-                ?>
-            </p>
-        </div>
     <?php elseif (isset($_SESSION['delete-post-success'])) : // Show if the post is deleted
     ?>
         <div class="container alert__message success">

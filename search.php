@@ -1,10 +1,9 @@
 <?php
-include 'partials/header.php';
+require 'partials/header.php';
 
-// fech post if id is set 
-if (isset($_GET['id'])) {
-    $id = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
-    $query = "SELECT * FROM posts WHERE category_id = $id";
+if (isset($_GET['search']) && isset($_GET['submit'])) {
+    $search = filter_var($_GET['search'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $query = "SELECT * FROM posts WHERE title LIKE '%$search%' ORDER BY date_time DESC";
     $posts = mysqli_query($connection, $query);
 } else {
     header('location:' . ROOT_URL . 'blog.php');
@@ -12,24 +11,8 @@ if (isset($_GET['id'])) {
 }
 ?>
 
-<header class="category__title">
-    <h2>
-        <?php
-        // fetch category
-        $categoryId = $id;
-        $categoryQuery = "SELECT * FROM categories WHERE id = $id";
-        $categoryResult = mysqli_query($connection, $categoryQuery);
-        $category = mysqli_fetch_assoc($categoryResult);
-        echo $category['title']
-        ?>
-    </h2>
-</header>
-
-<!-- End of Category Title -->
-
-<!-- Section Posts -->
 <?php if (mysqli_num_rows($posts) > 0) : ?>
-    <section class="posts">
+    <section class="posts <?= 'section__extra-margin' ?> ">
         <div class="container posts__container">
             <?php while ($post = mysqli_fetch_assoc($posts)) : ?>
                 <article class="post">
@@ -37,8 +20,15 @@ if (isset($_GET['id'])) {
                         <img src="uploads/images/<?= $post['thumbnail'] ?>">
                     </div>
                     <div class="post__info">
+                        <?php
+                        // fetch category
+                        $categoryId = $post['category_id'];
+                        $categoryQuery = "SELECT * FROM categories WHERE id = $categoryId";
+                        $categoryResult = mysqli_query($connection, $categoryQuery);
+                        $category = mysqli_fetch_assoc($categoryResult);
 
-
+                        ?>
+                        <a href="<?= ROOT_URL ?>category-posts.php?id=<?= $post['category_id'] ?>" class="category__button"><?= $category['title'] ?></a>
                         <h3 class="post__title"><a href="<?= ROOT_URL ?>post.php?id=<?= $post['id'] ?>"><?= $post['title'] ?></a></h3>
                         <p class="post__body"><?= substr($post['body'], 0, 150) ?>...
                         </p>
@@ -65,10 +55,11 @@ if (isset($_GET['id'])) {
         </div>
     </section>
 <?php else : ?>
-    <div class="alert__message error lg">
-        <p>No post found for this category</p>
+    <div class="alert__message error lg section__extra-margin">
+        <p>No Posts Found</p>
     </div>
-<?php endif ?>
+<?php endif  ?>
+
 <!--  Category Buttons-->
 
 <section class="category__buttons">
@@ -85,6 +76,4 @@ if (isset($_GET['id'])) {
 
 <!-- End of Category Buttons-->
 
-<?php
-include 'partials/footer.php';
-?>
+<?php include 'partials/footer.php' ?>

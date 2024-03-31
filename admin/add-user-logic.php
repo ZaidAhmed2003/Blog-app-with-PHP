@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
     $createPassword = filter_var($_POST['createpassword'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $confirmPassword = filter_var($_POST['confirmpassword'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $is_admin = filter_var($_POST['userrole'], FILTER_SANITIZE_NUMBER_INT);
-    $avatar = $_FILES['avatar'];
+    $avatar = $_FILES['avatar']; 
 
     // Validate Input Values
 

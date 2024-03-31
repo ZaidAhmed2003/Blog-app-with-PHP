@@ -1,26 +1,42 @@
 <?php
 include 'partials/header.php';
+
+// fetch the post from database of clicked id
+if (isset($_GET['id'])) {
+    $id = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
+    $query = "SELECT * FROM posts WHERE id = $id";
+    $result = mysqli_query($connection, $query);
+    $post = mysqli_fetch_assoc($result);
+} else {
+    header('location:' . ROOT_URL . 'blog.php');
+    die();
+}
 ?>
 
 <section class="singlepost">
     <div class="container singlepost__container">
-        <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, reiciendis.</h2>
+        <h2><?= $post['title'] ?></h2>
         <div class="post__author">
+            <?php
+            // fetch author
+            $authorId = $post['author_id'];
+            $authorQuery = "SELECT * FROM users WHERE id = $authorId";
+            $authorResult = mysqli_query($connection, $authorQuery);
+            $author = mysqli_fetch_assoc($authorResult);
+
+            ?>
             <div class="post__author-avatar">
-                <img src="./images/avatar3.jpg">
+                <img src="uploads/images/<?= $author['avatar'] ?>">
             </div>
             <div class="post__author-info">
-                <h5>By: Jhon Mills</h5>
-                <small>June 13, 2022 - 10:33</small>
+                <h5>By: <?= "{$author['firstname']} {$author['lastname']}" ?></h5>
+                <small><?= date("M d, Y - H:i", strtotime($post['date_time'])) ?></small>
             </div>
         </div>
         <div class="singlepost__thumbnail">
-            <img src="./images/blog33.jpg">
+            <img src="uploads/images/<?= $post['thumbnail'] ?>">
         </div>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, accusantium harum, molestias sint fugit nesciunt ullam non modi sapiente numquam corrupti cum dolores blanditiis quas beatae sit! Repellat illo est quo, debitis amet accusantium odit voluptatum adipisci perferendis obcaecati eum.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, accusantium harum, molestias sint fugit nesciunt ullam non modi sapiente numquam corrupti cum dolores blanditiis quas beatae sit! Repellat illo est quo, debitis amet accusantium odit voluptatum adipisci perferendis obcaecati eum.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, accusantium harum, molestias sint fugit nesciunt ullam non modi sapiente numquam corrupti cum dolores blanditiis quas beatae sit! Repellat illo est quo, debitis amet accusantium odit voluptatum adipisci perferendis obcaecati eum.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, accusantium harum, molestias sint fugit nesciunt ullam non modi sapiente numquam corrupti cum dolores blanditiis quas beatae sit! Repellat illo est quo, debitis amet accusantium odit voluptatum adipisci perferendis obcaecati eum.</p>
+        <p> <?= $post['body'] ?></p>
     </div>
 </section>
 
