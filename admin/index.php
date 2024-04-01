@@ -91,7 +91,7 @@ $posts = mysqli_query($connection, $query);
         </aside>
 
         <main>
-            <h2>Manage Users</h2>
+            <h2>Manage Posts</h2>
             <?php if (mysqli_num_rows($posts) > 0) : ?>
                 <table>
                     <thead>
